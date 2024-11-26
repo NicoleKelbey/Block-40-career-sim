@@ -14,11 +14,20 @@ model User {
   posts   Post[]
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model Orders {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
+
+   products    Products[] @relation("OrderProducts")
+}
+
+model Products {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  orders Orders[] @relation("OrderProducts")
 }
